@@ -1,6 +1,6 @@
 {
   "name": "publish-react-app",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Tool for publishing a react app publicly via S3",
   "main": "index.js",
   "bin": "index.js",
