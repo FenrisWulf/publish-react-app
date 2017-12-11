@@ -24,6 +24,7 @@
   "homepage": "https://github.com/FenrisWulf/publish-react-app#readme",
   "dependencies": {
     "aws-sdk": "^2.166.0",
-    "mime": "^2.0.3"
+    "mime": "^2.0.3",
+    "random-words": "0.0.1"
   }
 }
