@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 (function main () {
     var S3 = require('aws-sdk/clients/s3')
     var fs = require('fs')
