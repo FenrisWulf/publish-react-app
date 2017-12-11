@@ -15,7 +15,8 @@
         }   
     }
     var s3 = new S3({apiVersion: '2006-03-01'})
-
+    var doneFileCount = 0
+    var totalFileCount = 0
     s3.createBucket(params, function(err, data) {
         if (err) console.log(err, err.stack)
         else {
@@ -50,8 +51,6 @@
                                 if (err) console.log(err, err.stack)
                                 else {
                                     uploadFilesToS3('./build')
-                                    console.log('Your website is now available:')
-                                    console.log('http://' + bucketName + '.s3-website-' + awsLocation + '.amazonaws.com/')
                                 }
                             })
                         }
@@ -69,9 +68,11 @@
                 console.log('No built files. Did you run `npm run build`?');
                 return;
             }
+            totalFileCount += files.length
             files.forEach(function (file) {
                 const filePath = path.join(directory, file);
                 if (fs.lstatSync(filePath).isDirectory()) {
+                    doneFileCount++
                     uploadFilesToS3(directory + '/' + file)
                 } else {
                     var params = {
@@ -82,7 +83,15 @@
                     }
                     s3.putObject(params, function (err, data) {
                         if (err) console.log(err)
+                        else {
+                            doneFileCount++
+                            if (doneFileCount === totalFileCount) {
+                                console.log('Your website is now available:')
+                                console.log('http://' + bucketName + '.s3-website-' + awsLocation + '.amazonaws.com/')
+                            }
+                        }
                     })
+                    
                 }
             })
         })
